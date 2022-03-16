@@ -5,7 +5,6 @@ namespace todoDotNet6.Repo
         TIndex Id { get; set; }
     }
 
-
     public interface IRepository<Todo, TIndex>
      {
         Todo CreateTodo(Todo request);

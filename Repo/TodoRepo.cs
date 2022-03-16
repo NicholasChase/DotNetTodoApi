@@ -6,7 +6,6 @@ namespace todoDotNet6.TodoRepo
 
     public interface ITodoRepository : IRepository<Todo,Guid> {}
 
-
     public class TodoRepo : ControllerBase, ITodoRepository
     {
         public static Dictionary<Guid, Todo> todos = new Dictionary<Guid, Todo>() {};

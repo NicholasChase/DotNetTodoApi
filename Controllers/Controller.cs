@@ -5,11 +5,11 @@ namespace todoDotNet6.Controllers
 {
     [ApiController] 
     [Route("task")]
-    public class TController : ControllerBase
+    public class Controller : ControllerBase
     {
         private readonly ITodoRepository todoRepository;
 
-        public TController(ITodoRepository todoRepository)
+        public Controller(ITodoRepository todoRepository)
         {
             this.todoRepository = todoRepository;
         }
@@ -21,7 +21,6 @@ namespace todoDotNet6.Controllers
             var allTodos = todoRepository.GetTodos();
             return Ok(allTodos);
         }
-
 
        [HttpPost]
        public ActionResult<Todo> Post([FromBody]Todo todo)
