@@ -8,20 +8,19 @@ namespace todoDotNet6.TodoRepo
 
     public class TodoRepo : ControllerBase, ITodoRepository
     {
-        public static Dictionary<Guid, Todo> todos = new Dictionary<Guid, Todo>() {};
+        public static Dictionary<Guid, Todo> todos = new Dictionary<Guid, Todo>();
 
         public Todo CreateTodo(Todo request)
         {
             request.Id = Guid.NewGuid();
-            request.CreatedDate = DateTime.Now;
             todos.Add(request.Id, request);
             return request;  
         }
 
-        public Dictionary<Guid, Todo> DeleteTodo(Guid id)
+        public List<Todo> DeleteTodo(Guid id)
         {
             todos.Remove(id);
-            return todos;
+            return todos.Values.ToList();
         }
 
         public Todo GetATodo(Guid id)
@@ -34,9 +33,9 @@ namespace todoDotNet6.TodoRepo
             return todos[id];
         }
 
-        public Dictionary<Guid, Todo> GetTodos()
+        public List<Todo> GetTodos()
         {
-            return todos;
+            return todos.Values.ToList();
         }
 
         public Todo UpdateTodo(Guid id, Todo request)

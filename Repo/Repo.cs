@@ -9,9 +9,9 @@ namespace todoDotNet6.Repo
      {
         Todo CreateTodo(Todo request);
         Todo UpdateTodo(TIndex id, Todo request);
-        Dictionary<Guid, Todo> DeleteTodo(TIndex id);
+        List<Todo> DeleteTodo(TIndex id);
         Todo GetATodo(TIndex id);
-        Dictionary<Guid, Todo>  GetTodos();
+        List<Todo> GetTodos();
         Todo ChangeStatus(TIndex id, Todo request);
      }
 }

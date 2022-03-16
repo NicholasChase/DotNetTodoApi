@@ -14,7 +14,7 @@ namespace todoDotNet6
 
         public DateTime DueDate { get; set; }
 
-        public DateTime CreatedDate { get; set; }
+        public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
 
         public Boolean Completed { get; set; }
     }

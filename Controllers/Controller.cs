@@ -7,53 +7,53 @@ namespace todoDotNet6.Controllers
     [Route("task")]
     public class Controller : ControllerBase
     {
-        private readonly ITodoRepository todoRepository;
+        private readonly ITodoRepository _todoRepository;
 
         public Controller(ITodoRepository todoRepository)
         {
-            this.todoRepository = todoRepository;
+            _todoRepository = todoRepository;
         }
 
         // ITodoRepository todoRepository = new TodoRepo();
         [HttpGet]
         public ActionResult<Todo> GetTodos ()
         {
-            var allTodos = todoRepository.GetTodos();
+            var allTodos = _todoRepository.GetTodos();
             return Ok(allTodos);
         }
 
        [HttpPost]
        public ActionResult<Todo> Post([FromBody]Todo todo)
         {
-            var createdTodo = todoRepository.CreateTodo(todo);
+            var createdTodo = _todoRepository.CreateTodo(todo);
             return Ok(createdTodo);
         }
 
        [HttpDelete("{id}")]
        public ActionResult<Todo> Delete(Guid id)
         {
-            var allTodos = todoRepository.DeleteTodo(id);
+            var allTodos = _todoRepository.DeleteTodo(id);
             return Ok(allTodos);
         }
 
         [HttpPut("{id}")]
         public ActionResult<Todo> Put(Guid id, [FromBody]Todo request)
         {
-            var updateTodo =  todoRepository.UpdateTodo(id, request);
+            var updateTodo =  _todoRepository.UpdateTodo(id, request);
             return Ok(updateTodo);
         }
 
         [HttpGet("{id}")]
         public ActionResult<Todo> GetATodo(Guid id)
         {
-            var todo =  todoRepository.GetATodo(id);
+            var todo =  _todoRepository.GetATodo(id);
             return Ok(todo);
         }
 
         [HttpPut("statusComplete/{id}")]
         public ActionResult<Todo> PutStatus(Guid id, [FromBody]Todo request)
         {
-            var todo = todoRepository.ChangeStatus(id, request);
+            var todo = _todoRepository.ChangeStatus(id, request);
             return Ok(todo);
         }
     }
