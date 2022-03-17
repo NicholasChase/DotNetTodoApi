@@ -14,9 +14,8 @@ namespace todoDotNet6.Controllers
             _todoRepository = todoRepository;
         }
 
-        // ITodoRepository todoRepository = new TodoRepo();
         [HttpGet]
-        public ActionResult<Todo> GetTodos ()
+        public ActionResult<IEnumerable<Todo>> GetTodos ()
         {
             var allTodos = _todoRepository.GetTodos();
             return Ok(allTodos);
