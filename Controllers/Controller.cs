@@ -32,7 +32,9 @@ namespace todoDotNet6.Controllers
        [HttpDelete("{id}")]
        public ActionResult<Todo> Delete(Guid id)
         {
-            var allTodos = _todoRepository.DeleteTodo(id);
+            // var allTodos = _todoRepository.DeleteTodo(id);
+            _todoRepository.DeleteTodo(id);
+            var allTodos = _todoRepository.GetTodos();
             return Ok(allTodos);
         }
 

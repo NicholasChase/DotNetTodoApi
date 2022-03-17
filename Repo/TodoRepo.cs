@@ -17,25 +17,13 @@ namespace todoDotNet6.TodoRepo
             return request;  
         }
 
-        public List<Todo> DeleteTodo(Guid id)
-        {
-            todos.Remove(id);
-            return todos.Values.ToList();
-        }
-
         public Todo GetATodo(Guid id)
         {
             if (!todos.ContainsKey(id))
             {
                 return null;
             }
-
             return todos[id];
-        }
-
-        public List<Todo> GetTodos()
-        {
-            return todos.Values.ToList();
         }
 
         public Todo UpdateTodo(Guid id, Todo request)
@@ -45,9 +33,7 @@ namespace todoDotNet6.TodoRepo
             {
                 request.Id = id;
                 request.CreatedDate = val.CreatedDate;
-
                 todos[request.Id]  = request;
-
                 return request;
             }
 
@@ -67,6 +53,16 @@ namespace todoDotNet6.TodoRepo
                 return (request);
             }
             return request;
+        }
+
+        public void DeleteTodo(Guid id)
+        {
+            todos.Remove(id);
+        }
+
+        public IEnumerable<Todo> GetTodos()
+        {
+            return todos.Values.ToList();
         }
     }
 }
