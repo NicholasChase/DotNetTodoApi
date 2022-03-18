@@ -14,20 +14,12 @@ namespace todoDotNet6.Controller
             _todoRepository = todoRepository;
         }
 
-        // ITodoRepository todoRepository = new TodoRepo();
         [HttpGet]
         public async Task<IResult> GetTodos ()
         {
             var allTodos = await _todoRepository.GetTodos();
             return Results.Ok(allTodos);
         }
-
-    //    [HttpPost]
-    //    public ActionResult<Todo> Post([FromBody]Todo todo)
-    //     {
-    //         var createdTodo = _todoRepository.CreateTodo(todo);
-    //         return Ok(createdTodo);
-    //     }
 
        [HttpPost]
        public async Task<IResult> Post([FromBody]Todo todo)
