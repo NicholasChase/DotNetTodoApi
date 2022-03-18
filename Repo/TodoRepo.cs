@@ -21,77 +21,121 @@ namespace todoDotNet6.TodoRepo
             _context = context;
         }
 
-        public Todo CreateTodo(Todo request)
+        public async Task<Todo> CreateTodo(Todo request)
         {
-            // request.Id = Guid.NewGuid();
-            // todos.Add(request.Id, request);
-            // return request;  
-
             request.Id = Guid.NewGuid();
             var todo =  _dbset.Add(request);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return request;
         }
 
-        public Todo? GetATodo(Guid id)
+        public async Task<Todo> UpdateTodo(Guid id, Todo request)
         {
+            request.Id = id;
+
+            var todo = _dbset.Update(request);
+
+            await _context.SaveChangesAsync();
+
+            return request;
+        }
+
+        public async Task<Todo>? DeleteTodo(Guid id)
+        {
+            var todo = _dbset.Remove(new Todo { Id =  id });
+            await _context.SaveChangesAsync();
+            return null;
+        }
+
+        public async Task<Todo> GetATodo(Guid id)
+        {
+            return await _dbset.FindAsync(id);
+        }
+
+        public async Task<IEnumerable<Todo>> GetTodos()
+        {
+            
+            // var val = todos.Values.ToList();
+
+            return  await _dbset.ToListAsync();
+        }
+
+        public Task<Todo> ChangeStatus(Guid id, Todo request)
+        {
+            throw new NotImplementedException();
+        }
+
+        // public Todo CreateTodo(Todo request)
+        // {
+        //     // request.Id = Guid.NewGuid();
+        //     // todos.Add(request.Id, request);
+        //     // return request;  
+
+        //     request.Id = Guid.NewGuid();
+        //     var todo =  _dbset.Add(request);
+        //     _context.SaveChanges();
+        //     return request;
+        // }
+
+        // public Todo? GetATodo(Guid id)
+        // {
             // if (!todos.ContainsKey(id))
             // {
             //     return null;
             // }
             // return todos[id];
 
-            return _dbset.Find(id);
-        }
+            // return _dbset.Find(id);
+        // }
 
-        public Todo UpdateTodo(Guid id, Todo request)
-        {
-            // Todo val;
-            // if (todos.TryGetValue(id, out val))
-            // {
-            //     request.Id = id;
-            //     request.CreatedDate = val.CreatedDate;
-            //     todos[request.Id]  = request;
-            //     return request;
-            // }
+        // public Todo UpdateTodo(Guid id, Todo request)
+        // {
+        //     // Todo val;
+        //     // if (todos.TryGetValue(id, out val))
+        //     // {
+        //     //     request.Id = id;
+        //     //     request.CreatedDate = val.CreatedDate;
+        //     //     todos[request.Id]  = request;
+        //     //     return request;
+        //     // }
 
-            request.Id = id;
+        //     request.Id = id;
 
-            var todo = _dbset.Update(request);
+        //     var todo = _dbset.Update(request);
 
-            _context.SaveChanges();
+        //     _context.SaveChanges();
 
-            return request;
-        }
+        //     return request;
+        // }
 
-        public Todo ChangeStatus(Guid id, Todo request)
-        {
-            Todo val;
-            if(todos.TryGetValue(id, out val))
-            {
-                request.Id = id;
-                request.Description = val.Description;
-                request.DueDate = val.DueDate;
-                request.CreatedDate = val.CreatedDate;
-                todos[request.Id] = request;
-                return (request);
-            }
-            return request;
-        }
+        // public Todo ChangeStatus(Guid id, Todo request)
+        // {
+        //     Todo val;
+        //     if(todos.TryGetValue(id, out val))
+        //     {
+        //         request.Id = id;
+        //         request.Description = val.Description;
+        //         request.DueDate = val.DueDate;
+        //         request.CreatedDate = val.CreatedDate;
+        //         todos[request.Id] = request;
+        //         return (request);
+        //     }
+        //     return request;
+        // }
 
-        public void DeleteTodo(Guid id)
-        {
-            // todos.Remove(id);
-            var todo = _dbset.Remove(new Todo { Id =  id });
-            _context.SaveChanges();
-        }
+        // public void DeleteTodo(Guid id)
+        // {
+        //     // todos.Remove(id);
+            // var todo = _dbset.Remove(new Todo { Id =  id });
+            // _context.SaveChanges();
+        // }
 
-        public IEnumerable<Todo> GetTodos()
-        {
-            // return todos.Values.ToList();
-            var val = todos.Values.ToList();
+        // public IEnumerable<Todo> GetTodos()
+        // {
+            // // return todos.Values.ToList();
+            // var val = todos.Values.ToList();
 
-            return _dbset.ToList();
-        }
+            // return _dbset.ToList();
+        // }
     }
 }

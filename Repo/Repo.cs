@@ -6,12 +6,13 @@ namespace todoDotNet6.Repo
     }
 
     public interface IRepository<Todo, TIndex>
+        where Todo : IEntity<TIndex>
      {
-        Todo CreateTodo(Todo request);
-        Todo UpdateTodo(TIndex id, Todo request);
-        void DeleteTodo(TIndex id);
-        Todo? GetATodo(TIndex id);
-        IEnumerable<Todo> GetTodos();
-        Todo ChangeStatus(TIndex id, Todo request);
+        Task<Todo> CreateTodo(Todo request);
+        Task<Todo> UpdateTodo(TIndex id, Todo request);
+        Task<Todo>? DeleteTodo(TIndex id);
+        Task<Todo> GetATodo(TIndex id);
+        Task<IEnumerable<Todo>> GetTodos();
+        Task<Todo>  ChangeStatus(TIndex id, Todo request);
      }
 }
