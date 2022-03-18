@@ -10,7 +10,7 @@ namespace todoDotNet6.Repo
         Todo CreateTodo(Todo request);
         Todo UpdateTodo(TIndex id, Todo request);
         void DeleteTodo(TIndex id);
-        Todo GetATodo(TIndex id);
+        Todo? GetATodo(TIndex id);
         IEnumerable<Todo> GetTodos();
         Todo ChangeStatus(TIndex id, Todo request);
      }

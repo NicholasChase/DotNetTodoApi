@@ -10,13 +10,16 @@ var builder = WebApplication.CreateBuilder(args);
 var stringBuilder = new NpgsqlConnectionStringBuilder()
 {
     Host = "localhost",
-    Port = 5234,
+    Port = 5432,
     Username = "postgres",
     Password = "password",
     Database = "todos_app"
 };
 
-builder.Services.AddDbContext<DataContext>(options => options.UseNpgsql(stringBuilder.ConnectionString));
+builder.Services.AddDbContext<DataContext>(options => 
+    options.UseNpgsql(stringBuilder.ConnectionString)
+        .UseSnakeCaseNamingConvention()
+);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
