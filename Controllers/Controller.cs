@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using todoDotNet6.TodoRepo;
 
-namespace todoDotNet6.Controllers
+namespace todoDotNet6.Controller
 {
     [ApiController] 
     [Route("task")]

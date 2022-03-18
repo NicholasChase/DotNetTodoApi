@@ -6,9 +6,17 @@ namespace todoDotNet6.TodoRepo
     
     public interface ITodoRepository : IRepository<Todo,Guid> {}
 
-    public class TodoRepo : ControllerBase, ITodoRepository
+    public class TodoRepo : ITodoRepository
     {
+        private readonly DataContext _context;
+
         public static Dictionary<Guid, Todo> todos = new Dictionary<Guid, Todo>();
+
+
+        public TodoRepo(DataContext context)
+        {
+            _context = context;
+        }
 
         public Todo CreateTodo(Todo request)
         {
@@ -17,7 +25,7 @@ namespace todoDotNet6.TodoRepo
             return request;  
         }
 
-        public Todo GetATodo(Guid id)
+        public Todo? GetATodo(Guid id)
         {
             if (!todos.ContainsKey(id))
             {
