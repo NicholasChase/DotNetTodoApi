@@ -1,8 +1,25 @@
+using Microsoft.EntityFrameworkCore;
+using Npgsql;
+using todoDotNet6;
 using todoDotNet6.TodoRepo; 
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+var stringBuilder = new NpgsqlConnectionStringBuilder()
+{
+    Host = "localhost",
+    Port = 5432,
+    Username = "postgres",
+    Password = "password",
+    Database = "todos_app"
+};
+
+builder.Services.AddDbContext<DataContext>(options => 
+    options.UseNpgsql(stringBuilder.ConnectionString)
+        .UseSnakeCaseNamingConvention()
+);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

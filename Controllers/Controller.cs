@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using todoDotNet6.TodoRepo;
 
-namespace todoDotNet6.Controllers
+namespace todoDotNet6.Controller
 {
     [ApiController] 
     [Route("task")]
@@ -15,46 +15,46 @@ namespace todoDotNet6.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Todo>> GetTodos ()
+        public async Task<ActionResult<IEnumerable<Todo>>> GetTodos ()
         {
-            var allTodos = _todoRepository.GetTodos();
+            var allTodos = await _todoRepository.GetTodos();
             return Ok(allTodos);
         }
 
        [HttpPost]
-       public ActionResult<Todo> Post([FromBody]Todo todo)
+       public async Task<ActionResult<Todo>> Post([FromBody]Todo todo)
         {
-            var createdTodo = _todoRepository.CreateTodo(todo);
+            var createdTodo = await _todoRepository.CreateTodo(todo);
             return Ok(createdTodo);
         }
 
        [HttpDelete("{id}")]
-       public ActionResult<Todo> Delete(Guid id)
+       public async Task<ActionResult<Todo>> Delete(Guid id)
         {
             // var allTodos = _todoRepository.DeleteTodo(id);
-            _todoRepository.DeleteTodo(id);
-            var allTodos = _todoRepository.GetTodos();
+            await _todoRepository.DeleteTodo(id);
+            var allTodos = await _todoRepository.GetTodos();
             return Ok(allTodos);
         }
 
         [HttpPut("{id}")]
-        public ActionResult<Todo> Put(Guid id, [FromBody]Todo request)
+        public async Task<ActionResult<Todo>> Put(Guid id, [FromBody]Todo request)
         {
-            var updateTodo =  _todoRepository.UpdateTodo(id, request);
+            var updateTodo =  await _todoRepository.UpdateTodo(id, request);
             return Ok(updateTodo);
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Todo> GetATodo(Guid id)
+        public async Task<ActionResult<Todo>> GetATodo(Guid id)
         {
-            var todo =  _todoRepository.GetATodo(id);
+            var todo =  await _todoRepository.GetATodo(id);
             return Ok(todo);
         }
 
         [HttpPut("statusComplete/{id}")]
-        public ActionResult<Todo> PutStatus(Guid id, [FromBody]Todo request)
+        public async Task<ActionResult<Todo>> PutStatus(Guid id, [FromBody]Todo request)
         {
-            var todo = _todoRepository.ChangeStatus(id, request);
+            var todo = await _todoRepository.ChangeStatus(id, request);
             return Ok(todo);
         }
     }

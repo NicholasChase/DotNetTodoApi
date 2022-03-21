@@ -1,68 +1,70 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using todoDotNet6.Repo;
 
 namespace todoDotNet6.TodoRepo
 {
-
+    
     public interface ITodoRepository : IRepository<Todo,Guid> {}
 
-    public class TodoRepo : ControllerBase, ITodoRepository
+    public class TodoRepo : ITodoRepository
     {
+        private readonly DataContext _context;
+
         public static Dictionary<Guid, Todo> todos = new Dictionary<Guid, Todo>();
 
-        public Todo CreateTodo(Todo request)
+        private DbSet<Todo> _dbset => _context.Set<Todo>();
+
+
+        public TodoRepo(DataContext context)
+        {
+            _context = context;
+        }
+
+        public async Task<Todo> CreateTodo(Todo request)
         {
             request.Id = Guid.NewGuid();
-            todos.Add(request.Id, request);
-            return request;  
+            var todo =  _dbset.Add(request);
+            await _context.SaveChangesAsync();
+            return request;
         }
 
-        public Todo GetATodo(Guid id)
+        public async Task<Todo> UpdateTodo(Guid id, Todo request)
         {
-            if (!todos.ContainsKey(id))
-            {
-                return null;
-            }
-            return todos[id];
-        }
+            request.Id = id;
 
-        public Todo UpdateTodo(Guid id, Todo request)
-        {
-            Todo val;
-            if (todos.TryGetValue(id, out val))
-            {
-                request.Id = id;
-                request.CreatedDate = val.CreatedDate;
-                todos[request.Id]  = request;
-                return request;
-            }
+            var todo = _dbset.Update(request);
+
+
 
             return request;
         }
 
-        public Todo ChangeStatus(Guid id, Todo request)
+        public async Task DeleteTodo(Guid id)
         {
-            Todo val;
-            if(todos.TryGetValue(id, out val))
-            {
-                request.Id = id;
-                request.Description = val.Description;
-                request.DueDate = val.DueDate;
-                request.CreatedDate = val.CreatedDate;
-                todos[request.Id] = request;
-                return (request);
-            }
-            return request;
+            var todo = _dbset.Remove(new Todo { Id =  id });
+            
+            
+            
+            
+            
+            await _context.SaveChangesAsync();
         }
 
-        public void DeleteTodo(Guid id)
+        public async Task<Todo> GetATodo(Guid id)
         {
-            todos.Remove(id);
+            return await _dbset.FindAsync(id);
         }
 
-        public IEnumerable<Todo> GetTodos()
+        public async Task<IEnumerable<Todo>> GetTodos()
         {
-            return todos.Values.ToList();
+
+            return  await _dbset.ToListAsync();
+        }
+
+        public Task<Todo> ChangeStatus(Guid id, Todo request)
+        {
+            throw new NotImplementedException();
         }
     }
 }
