@@ -15,47 +15,47 @@ namespace todoDotNet6.Controller
         }
 
         [HttpGet]
-        public async Task<IResult> GetTodos ()
+        public async Task<ActionResult<IEnumerable<Todo>>> GetTodos ()
         {
             var allTodos = await _todoRepository.GetTodos();
-            return Results.Ok(allTodos);
+            return Ok(allTodos);
         }
 
        [HttpPost]
-       public async Task<IResult> Post([FromBody]Todo todo)
+       public async Task<ActionResult<Todo>> Post([FromBody]Todo todo)
         {
             var createdTodo = await _todoRepository.CreateTodo(todo);
-            return Results.Ok(createdTodo);
+            return Ok(createdTodo);
         }
 
        [HttpDelete("{id}")]
-       public async Task<IResult> Delete(Guid id)
+       public async Task<ActionResult<Todo>> Delete(Guid id)
         {
             // var allTodos = _todoRepository.DeleteTodo(id);
             await _todoRepository.DeleteTodo(id);
             var allTodos = await _todoRepository.GetTodos();
-            return Results.Ok(allTodos);
+            return Ok(allTodos);
         }
 
         [HttpPut("{id}")]
-        public async Task<IResult> Put(Guid id, [FromBody]Todo request)
+        public async Task<ActionResult<Todo>> Put(Guid id, [FromBody]Todo request)
         {
             var updateTodo =  await _todoRepository.UpdateTodo(id, request);
-            return Results.Ok(updateTodo);
+            return Ok(updateTodo);
         }
 
         [HttpGet("{id}")]
-        public async Task<IResult> GetATodo(Guid id)
+        public async Task<ActionResult<Todo>> GetATodo(Guid id)
         {
             var todo =  await _todoRepository.GetATodo(id);
-            return Results.Ok(todo);
+            return Ok(todo);
         }
 
         [HttpPut("statusComplete/{id}")]
-        public async Task<IResult> PutStatus(Guid id, [FromBody]Todo request)
+        public async Task<ActionResult<Todo>> PutStatus(Guid id, [FromBody]Todo request)
         {
             var todo = await _todoRepository.ChangeStatus(id, request);
-            return Results.Ok(todo);
+            return Ok(todo);
         }
     }
 }

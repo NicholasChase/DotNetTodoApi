@@ -35,16 +35,20 @@ namespace todoDotNet6.TodoRepo
 
             var todo = _dbset.Update(request);
 
-            await _context.SaveChangesAsync();
+
 
             return request;
         }
 
-        public async Task<Todo>? DeleteTodo(Guid id)
+        public async Task DeleteTodo(Guid id)
         {
             var todo = _dbset.Remove(new Todo { Id =  id });
+            
+            
+            
+            
+            
             await _context.SaveChangesAsync();
-            return null;
         }
 
         public async Task<Todo> GetATodo(Guid id)
