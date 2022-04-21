@@ -1,9 +1,11 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using todoDotNet6.TodoRepo;
 
 namespace todoDotNet6.Controller
 {
-    [ApiController] 
+    [ApiController]
+    [Authorize] 
     [Route("task")]
     public class Controller : ControllerBase
     {
@@ -14,7 +16,7 @@ namespace todoDotNet6.Controller
             _todoRepository = todoRepository;
         }
 
-        [HttpGet]
+        [HttpGet, AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Todo>>> GetTodos ()
         {
             var allTodos = await _todoRepository.GetTodos();

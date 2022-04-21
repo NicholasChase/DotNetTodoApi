@@ -33,7 +33,9 @@ namespace todoDotNet6.TodoRepo
         {
             request.Id = id;
 
-            var todo = _dbset.Update(request);
+            _dbset.Update(request);
+
+            await _context.SaveChangesAsync();
 
 
 
